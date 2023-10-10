@@ -1,4 +1,3 @@
-pip install transformers gradio timm==0.8.13.dev0
 import timm
 import transformers
 from torch import nn
@@ -121,15 +120,15 @@ def predict(classification_mode, image):
         percentage_affected = str(percentage_affected) + '%'
 
         #seg_img = PIL.Image.fromarray(seg_img)
+      
 
     return ({labels[i]: float(probs[i]) for i in range(len(labels))}, seg_img, percentage_affected)
 
 
 description = """
-<center><img src="https://huggingface.co/spaces/zklee98/SolarPanelAnomaly/resolve/main/images/dronePV_picture.jpg" width=270px> </center><br>
+<center><img src="https://cdn.leonardo.ai/users/ea51b01d-0fc3-464f-964d-31246eb82933/generations/0d8baade-445e-414d-b17e-20c95c12adff/Default_I_have_a_projet_which_is_about_drone_usage_for_solar_p_3.jpg" width=720px > </center><br>
 <center>This program identifies the type of anomaly found in solar panel using an image classification model and percentage of the affected area using an image segmentation model.</center><br><br><br>
 <center> Step 1: Choose classification mode >   Step 2: Upload your image >   Step 3: Click Submit    |    Examples available below</center><br>
-<center><i><b>(Models are trained on <a href="https://ai4earthscience.github.io/iclr-2020-workshop/papers/ai4earth22.pdf">InfraredSolarModules</a> dataset, and hence expect infrared image as input)</b></i></center>
 """
 
 gr.Interface(fn=predict,
@@ -139,9 +138,10 @@ gr.Interface(fn=predict,
              outputs=[gr.outputs.Label(num_top_classes=3, label='Detected:').style(container=False),
                       gr.Image(type='pil', label=' ').style(height=240, width=144),
                       gr.Textbox(label='Affected area:').style(container=False)],
-             title='Solar Panel Anomaly Detector',
+             title='Detection of Solar Panel Issues',
              description=description,
              examples=[['Binary Classification', '4849.jpg'], ['Multiclass Classification', '4849.jpg'],
                        ['Binary Classification', '7016.jpg'], ['Multiclass Classification', '10000.jpg']],
              cache_examples= False,
-             article= '<center>by <a href="https://www.linkedin.com/in/lzk/">Lee Zhe Kaai</a></center>').launch(debug=True)
+             article= '<center>by SolInspect</center>').launch(debug=True)
+
